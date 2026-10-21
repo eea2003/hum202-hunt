@@ -1,0 +1,901 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+</head>
+<body>
+<title>Historical Peninsula Hunt</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<style>
+/* Layout: one narrow column like a pilgrim's card; porphyry accent, mosaic gold marks what's done. */
+:root{
+  --bg:#efeeea; --card:#fbfaf7; --ink:#24202a; --muted:#6c6672; --line:#d9d5dc;
+  --accent:#6b2a4a; --accent-ink:#fff; --gold:#a8822c; --ok:#2e6b4c; --warn:#a4561f; --soft:#e6e2e8;
+  --display:"Cinzel","Trajan Pro",Georgia,serif;
+  --body:"Source Sans 3",-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#17151a; --card:#211e25; --ink:#eeeaf0; --muted:#a9a1ae; --line:#38333d;
+    --accent:#d48aac; --accent-ink:#17151a; --gold:#d6b25e; --ok:#73c49a; --warn:#e3a066; --soft:#2b2730;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#17151a; --card:#211e25; --ink:#eeeaf0; --muted:#a9a1ae; --line:#38333d;
+  --accent:#d48aac; --accent-ink:#17151a; --gold:#d6b25e; --ok:#73c49a; --warn:#e3a066; --soft:#2b2730;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 var(--body)}
+.wrap{max-width:560px;margin:0 auto;padding-block:16px 48px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  display:flex;flex-direction:column;gap:12px}
+h1{font-family:var(--display);font-weight:700;font-size:1.6rem;line-height:1.2;margin:0;letter-spacing:.04em;text-wrap:balance}
+h2{font-family:var(--display);font-weight:500;font-size:1.1rem;margin:0 0 .5em;letter-spacing:.05em}
+.sub{color:var(--muted);margin:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;min-width:0}
+.riddle{font-size:1.08rem;font-style:italic;white-space:pre-line;border-left:3px solid var(--gold);padding-left:12px;margin:.4em 0 .6em}
+details{margin:.2em 0 .6em}
+summary{cursor:pointer;color:var(--accent);font-weight:600;font-size:.92rem}
+details .riddle{font-size:1rem;color:var(--muted)}
+label{display:block;font-weight:600;margin:.7em 0 .3em}
+input,select,textarea{width:100%;font:inherit;padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+textarea{min-height:150px;resize:vertical;line-height:1.45}
+input:focus,select:focus,textarea:focus,button:focus-visible,.btn:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button,.btn{display:block;text-align:center;text-decoration:none;font:inherit;font-weight:700;border:0;border-radius:8px;padding:13px 16px;width:100%;margin-top:10px;cursor:pointer;background:var(--accent);color:var(--accent-ink)}
+button.ghost,.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--line)}
+button:disabled{opacity:.4;cursor:not-allowed}
+.row{display:flex;gap:8px;flex-wrap:wrap}.row>*{flex:1 1 140px;min-width:0}
+.pill{display:inline-block;font-size:.8rem;padding:2px 10px;border-radius:99px;background:var(--soft);color:var(--muted)}
+.steps{display:flex;flex-direction:column;gap:20px}
+.step{display:flex;gap:12px;align-items:flex-start}
+.dot{flex:none;width:28px;height:28px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:.85rem;font-weight:700;color:var(--muted)}
+.dot.done{background:var(--gold);border-color:var(--gold);color:#fff}
+.step .body{flex:1;min-width:0}
+.step.locked{opacity:.45}
+.msg{font-size:.92rem;margin:6px 0 0}
+.msg.ok{color:var(--ok)}.msg.bad{color:var(--warn)}
+.small{font-size:.88rem;color:var(--muted);margin:.2em 0}
+.progress{display:flex;gap:5px}
+.progress span{flex:1;height:6px;border-radius:3px;background:var(--line)}
+.progress span.on{background:var(--gold)}
+img.proof{width:100%;max-width:100%;border-radius:8px;margin-top:10px;display:block}
+.code{font-family:ui-monospace,Menlo,monospace;font-weight:700;letter-spacing:.1em}
+.pts{font-weight:600;color:var(--gold);white-space:nowrap}
+.wc{font-size:.85rem;color:var(--muted);text-align:right;margin-top:4px;font-variant-numeric:tabular-nums}
+.wc.ok{color:var(--ok)}
+.log{font-size:.9rem;width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.log td{padding:6px 4px;border-bottom:1px solid var(--line);vertical-align:top}
+.tablebox{overflow-x:auto}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+#report{min-height:260px;font-size:.9rem}
+#cam{position:fixed;inset:0;background:#000;z-index:10;flex-direction:column;display:flex}
+#cam video{flex:1;width:100%;object-fit:cover;min-height:0}
+#cam .bar{display:flex;gap:10px;background:#000;padding:16px max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+#cam .bar button{margin:0}
+#cam .bar .ghost{color:#fff;border-color:#555}
+a{color:var(--accent)}
+code{font-size:.9em}
+</style>
+
+<div class="wrap" id="app"></div>
+
+<div id="cam" hidden>
+  <video id="video" playsinline autoplay muted></video>
+  <div class="bar">
+    <button class="ghost" id="camCancel">Cancel</button>
+    <button id="camShoot">Take photo</button>
+  </div>
+</div>
+<input type="file" id="photoIn" accept="image/*" capture="environment" hidden>
+
+<script>
+/* =====================================================================
+   CONFIG. Everything editable is here; nothing below needs changes.
+   Answers are stored only as hashes, so students can't read them in the
+   page source. Make new hashes in TA tools (team code 9999).
+   accept: [[...]] = one group, any keyword in it counts.
+           [[...],[...]] = the answer must hit every group.
+   Keywords match anywhere in what students type, so "the Nika riots"
+   matches "nika". Capitals, spaces and Turkish letters don't matter.
+   ===================================================================== */
+const CONFIG = {
+ "title": "Historical Peninsula Hunt",
+ "course": "HUM 202 · Introduction to Western Art",
+ "intro": "Solve each riddle, go to the place it describes and prove you were there. Your answers are saved on this phone as you go.",
+ "submitUrl": "https://example.edu/course/assignment-PLACEHOLDER",
+ "submitLabel": "Open assignment submission",
+ "adminPin": "9999",
+ "gpsRadiusMeters": 200,
+ "secret": "CHANGE-ME-2026",
+ "teams": [
+  {
+   "id": "A",
+   "name": "Team A",
+   "concept": "Emperorship",
+   "pin": "1111",
+   "stops": [
+    {
+     "kind": "place",
+     "label": "Riddle 1",
+     "riddle": {
+      "en": "I have been here for centuries—if only you knew all that I have witnessed.\nSince the sixth century, my dome has sent greetings to the seagulls soaring over Istanbul’s skies.\nThe meaning of my name is sacred wisdom; I have reflected the light of both religions.\nThese days, the line is often long—you may not even be able to get inside. But tell me, who am I?",
+      "tr": "Ben yüzyıllardır buradayım, bir bilsen nelere tanıklık ettim\nKubbem selam yollar İstanbul semalarında uçan martılara altıncı yüzyıldan beri\nKutsal bilgeliktir adımın anlamı, ışığını yansıttım her iki dinin\nGünümüzde çok sıra var, belki içeriye giremezsin, ama söyle bakalım ben kimim?"
+     },
+     "hint": "Commissioned by Justinian, it faces the Blue Mosque across Sultanahmet Square.",
+     "accept": [
+      [
+       "5e5f175d",
+       "c4f7b879",
+       "c848a30b",
+       "7563911c",
+       "a046a882",
+       "63d3a482",
+       "3bdcd686",
+       "d945ffbd"
+      ]
+     ],
+     "lat": 41.00858,
+     "lng": 28.98022,
+     "check": {
+      "q": "Count them from outside: how many minarets stand around the building?",
+      "accept": [
+       [
+        "310ca263",
+        "2f69f5a5",
+        "25c1e212"
+       ]
+      ]
+     },
+     "photo": true,
+     "photoNote": "Your group in front of the building, with the dome visible.",
+     "task": {
+      "points": 3,
+      "minWords": 80,
+      "q": "Please identify the monument that the riddle describes and provide general information about it. Due to the possible long queue at the premises, you do not have to get inside but please observe the building from outside and describe its architecture."
+     }
+    },
+    {
+     "kind": "think",
+     "label": "Riddle 2",
+     "solveLabel": "What happened, and where?",
+     "riddle": {
+      "en": "You found me and saw me—let your eyes rejoice!\nBut remember, nothing comes from nothing; everything has a reason.\nThink back to the past and tell me: what happened that led them to build me in all my grandeur?\nWhere did horses once thunder at full gallop, only for the ground to run red with blood that day?\nWhen the answer comes to mind, go there and see for yourself—does it still look as it once did?",
+      "tr": "Buldun ve gördün beni, bayram etsin gözlerin!\nAma unutma ki hiçbir şey yoktan varolmaz, vardır her şeyin bir sebebi\nDüşün geçmişi ve söyle, ne oldu da inşaa ettiler görkemli beni?\nNeresiydi atların dörtnala koştuğu ama o gün kana bulanan yer?\nGelince aklına doğru cevap, ziyaret et orayı ve söyle, hala eskisi gibi mi?"
+     },
+     "hint": "In 532 a rivalry between the Blues and the Greens turned into a revolt against Justinian.",
+     "accept": [
+      [
+       "1e1e2d28",
+       "5bf1d6f8",
+       "577633d9",
+       "3ea7ff43"
+      ]
+     ],
+     "photo": false,
+     "task": {
+      "points": 3,
+      "minWords": 80,
+      "q": "Please answer the question given in the riddle; write the historical content of the previous building and explain its relation to the place that this riddle directs you to. Once you write down your answers, proceed to that location."
+     }
+    },
+    {
+     "kind": "place",
+     "label": "Riddle 3",
+     "solveLabel": "What is it?",
+     "riddle": {
+      "en": "Tell me, please—do I still look good?\nAs you can see, I’ve lost a little of my old form; there are no longer any horses, boxes, or teams here…\nBut don’t let my modern appearance fool you—I still preserve a few things from the old days, right at my very heart!\nBut let’s take it slowly, one step at a time… Just ahead, there’s something that pierces the sky with its pointed tip, hailing from the lands of an ancient culture and adorned with picture-like inscriptions…\nTell me, what is it?",
+      "tr": "Söyle bana ne olur, iyi gözüküyor muyum hala?\nGörüyorsun ya birazcık kaybettim eski formumu; yok artık burada ne atlar, ne localar, ne de takımlar…\nAma aldanmasın gözlerin modern halime, koruyorum hala eski günlerden birkaç şey, hem de tam kalbimde!\nAma yavaş olalım, adım adım gidelim…Sivri ucuyla göğü delen, kadim bir kültürün topraklarından kopagelmiş, resimli yazılarla bezenmiş bir şey var hemen ileride…Söyle, o ne?"
+     },
+     "hint": "It was carved for a pharaoh in Egypt and shipped to Constantinople under Theodosius.",
+     "accept": [
+      [
+       "8e416b82",
+       "e1fcec63",
+       "dbfce2f1",
+       "84e32cb2",
+       "a4a92703",
+       "a0490bde"
+      ]
+     ],
+     "lat": 41.00583,
+     "lng": 28.97528,
+     "check": {
+      "q": "Look at the marble base: the inscriptions on it are written in two languages. Which ones?",
+      "accept": [
+       [
+        "fe1de803",
+        "e861b83c",
+        "869462a4",
+        "9f28abda"
+       ],
+       [
+        "6e305861",
+        "54c93a79"
+       ]
+      ]
+     },
+     "photo": true,
+     "photoNote": "Your group with the whole monument in the frame, base included.",
+     "task": {
+      "points": 1,
+      "minWords": 40,
+      "q": "Please identify the artwork in question and elaborate it on its historical context."
+     }
+    },
+    {
+     "kind": "place",
+     "label": "Riddle 4",
+     "solveLabel": "What is it?",
+     "riddle": {
+      "en": "Wait, why the hurry? Don’t leave just yet!\nLook, there’s a spiral-shaped structure right next door.\nGo closer and take a look—do you think it has always looked like this?\nImagine it, and tell us: what did it look like in the past?\nAnd where is one of its three Musketeers now?",
+      "tr": "Dur, bu ne acele, hemen gitme!\nBak hemen yan tarafta var bir sarmal yapı\nGit yakınına ve incele, hep böyle mi gözüküyordu sence?\nHayal et ve anlat bize, nasıldı geçmişteki hali?\nVe nerede üç silahşörlerden biri şimdi?"
+     },
+     "hint": "Bronze, brought from the Sanctuary of Apollo at Delphi.",
+     "accept": [
+      [
+       "449aeafc",
+       "93125562",
+       "838faeb1",
+       "3882629a",
+       "e9f5a9e7"
+      ]
+     ],
+     "lat": 41.00564,
+     "lng": 28.97514,
+     "check": {
+      "q": "How many of the three heads are still on the column today?",
+      "accept": [
+       [
+        "350ca8af",
+        "8b6fe763",
+        "ada7afdb",
+        "4faeced2",
+        "0dd2c9fb",
+        "46b8c0de",
+        "527dae8a",
+        "34f94325"
+       ]
+      ]
+     },
+     "photo": true,
+     "photoNote": "Your group next to the column.",
+     "task": {
+      "points": 1,
+      "minWords": 40,
+      "q": "Please identify the artwork in question, give some details about its history and indicate its original condition."
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "name": "Team B",
+   "concept": "Commemorative Art",
+   "pin": "2222",
+   "stops": [
+    {
+     "kind": "place",
+     "label": "Riddle 1",
+     "riddle": {
+      "en": "[Riddle 1 placeholder]",
+      "tr": "[Bilmece 1 – Türkçesi]"
+     },
+     "hint": "[Hint placeholder]",
+     "accept": [
+      [
+       "afd071e5"
+      ]
+     ],
+     "lat": null,
+     "lng": null,
+     "check": null,
+     "photo": true,
+     "task": {
+      "q": "[Question placeholder]",
+      "points": 1,
+      "minWords": 10
+     }
+    },
+    {
+     "kind": "place",
+     "label": "Riddle 2",
+     "riddle": {
+      "en": "[Riddle 2 placeholder]",
+      "tr": "[Bilmece 2 – Türkçesi]"
+     },
+     "hint": "[Hint placeholder]",
+     "accept": [
+      [
+       "afd071e5"
+      ]
+     ],
+     "lat": null,
+     "lng": null,
+     "check": null,
+     "photo": true,
+     "task": {
+      "q": "[Question placeholder]",
+      "points": 1,
+      "minWords": 10
+     }
+    },
+    {
+     "kind": "place",
+     "label": "Riddle 3",
+     "riddle": {
+      "en": "[Riddle 3 placeholder]",
+      "tr": "[Bilmece 3 – Türkçesi]"
+     },
+     "hint": "[Hint placeholder]",
+     "accept": [
+      [
+       "afd071e5"
+      ]
+     ],
+     "lat": null,
+     "lng": null,
+     "check": null,
+     "photo": true,
+     "task": {
+      "q": "[Question placeholder]",
+      "points": 1,
+      "minWords": 10
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "name": "Team C",
+   "concept": "[Concept placeholder]",
+   "pin": "3333",
+   "stops": [
+    {
+     "kind": "place",
+     "label": "Riddle 1",
+     "riddle": {
+      "en": "[Riddle 1 placeholder]",
+      "tr": "[Bilmece 1 – Türkçesi]"
+     },
+     "hint": "[Hint placeholder]",
+     "accept": [
+      [
+       "afd071e5"
+      ]
+     ],
+     "lat": null,
+     "lng": null,
+     "check": null,
+     "photo": true,
+     "task": {
+      "q": "[Question placeholder]",
+      "points": 1,
+      "minWords": 10
+     }
+    },
+    {
+     "kind": "place",
+     "label": "Riddle 2",
+     "riddle": {
+      "en": "[Riddle 2 placeholder]",
+      "tr": "[Bilmece 2 – Türkçesi]"
+     },
+     "hint": "[Hint placeholder]",
+     "accept": [
+      [
+       "afd071e5"
+      ]
+     ],
+     "lat": null,
+     "lng": null,
+     "check": null,
+     "photo": true,
+     "task": {
+      "q": "[Question placeholder]",
+      "points": 1,
+      "minWords": 10
+     }
+    },
+    {
+     "kind": "place",
+     "label": "Riddle 3",
+     "riddle": {
+      "en": "[Riddle 3 placeholder]",
+      "tr": "[Bilmece 3 – Türkçesi]"
+     },
+     "hint": "[Hint placeholder]",
+     "accept": [
+      [
+       "afd071e5"
+      ]
+     ],
+     "lat": null,
+     "lng": null,
+     "check": null,
+     "photo": true,
+     "task": {
+      "q": "[Question placeholder]",
+      "points": 1,
+      "minWords": 10
+     }
+    }
+   ]
+  },
+  {
+   "id": "D",
+   "name": "Team D",
+   "concept": "[Concept placeholder]",
+   "pin": "4444",
+   "stops": [
+    {
+     "kind": "place",
+     "label": "Riddle 1",
+     "riddle": {
+      "en": "[Riddle 1 placeholder]",
+      "tr": "[Bilmece 1 – Türkçesi]"
+     },
+     "hint": "[Hint placeholder]",
+     "accept": [
+      [
+       "afd071e5"
+      ]
+     ],
+     "lat": null,
+     "lng": null,
+     "check": null,
+     "photo": true,
+     "task": {
+      "q": "[Question placeholder]",
+      "points": 1,
+      "minWords": 10
+     }
+    },
+    {
+     "kind": "place",
+     "label": "Riddle 2",
+     "riddle": {
+      "en": "[Riddle 2 placeholder]",
+      "tr": "[Bilmece 2 – Türkçesi]"
+     },
+     "hint": "[Hint placeholder]",
+     "accept": [
+      [
+       "afd071e5"
+      ]
+     ],
+     "lat": null,
+     "lng": null,
+     "check": null,
+     "photo": true,
+     "task": {
+      "q": "[Question placeholder]",
+      "points": 1,
+      "minWords": 10
+     }
+    },
+    {
+     "kind": "place",
+     "label": "Riddle 3",
+     "riddle": {
+      "en": "[Riddle 3 placeholder]",
+      "tr": "[Bilmece 3 – Türkçesi]"
+     },
+     "hint": "[Hint placeholder]",
+     "accept": [
+      [
+       "afd071e5"
+      ]
+     ],
+     "lat": null,
+     "lng": null,
+     "check": null,
+     "photo": true,
+     "task": {
+      "q": "[Question placeholder]",
+      "points": 1,
+      "minWords": 10
+     }
+    }
+   ]
+  }
+ ],
+ "sharedStops": [
+  {
+   "kind": "place",
+   "label": "Meeting point",
+   "solveLabel": "Where is that place?",
+   "riddle": {
+    "en": "So, did you find it? What was it, and where was one of the missing pieces?\nTell me, where is that place?\nYou must go there, because your final riddle awaits you there.\nDon’t forget to bring your Museum Card (Müzekart) with you!",
+    "tr": "Buldun mu peki, neymiş ve neredeymiş kayıp parçalardan biri?\nSöyle bana orası neresi?\nGitmelisin oraya çünkü son bilmecen orada\nUnutma almayı Müzekart’ını yanına!"
+   },
+   "hint": "Three buildings and a garden of marbles, just inside Gülhane, below Topkapı Palace.",
+   "accept": [
+    [
+     "f59104e9",
+     "028c0923",
+     "adb01a7c",
+     "b2ae7168",
+     "bcc2975b",
+     "56540090"
+    ]
+   ],
+   "lat": 41.01167,
+   "lng": 28.98111,
+   "check": null,
+   "photo": true,
+   "photoNote": "Your group at the museum entrance.",
+   "task": null
+  },
+  {
+   "kind": "place",
+   "label": "Final riddle",
+   "solveLabel": "What is its name?",
+   "riddle": {
+    "en": "Welcome! Come, don’t be shy—step inside!\nMy doors are open to all who are fascinated by history and art.\nI am overflowing with culture; I could never contain it within my three buildings, so it spills out into my gardens as well.\nIn the courtyard, you will find a marble column capital, carved with a pair of eyes crowned by flowing, wavy locks.\nIt stands alone, far from its original home…\nSo, tell me: what is its name, and what is its mythological significance?",
+    "tr": "Hoşgeldin, gel çekinme, gir içeri!\nTüm tarih ve sanat meraklılarına kapım açıktır benim\nHer yerim kültür doludur, sığmam üç binama da, bahçelerime taşarım\nBulacaksın avluda bir sütun başı, mermerden yontulmuş bir çift göz var, dalgalı perçemlerin taçlandırdığı\nDuruyor tek başına, asıl evinden uzakta…\nSöyle bakalım nedir onun adı ve mitolojik bağlamı?"
+   },
+   "hint": "A snake-haired figure from Greek myth whose gaze turned people to stone.",
+   "accept": [
+    [
+     "c2c9991d",
+     "cb6768e1",
+     "dafa06ae",
+     "7921dc3c",
+     "8aceb969"
+    ]
+   ],
+   "lat": null,
+   "lng": null,
+   "check": null,
+   "photo": true,
+   "photoNote": "Your group with the capital in the courtyard.",
+   "task": {
+    "points": 1,
+    "minWords": 40,
+    "q": "Please provide some information about the artwork that the riddle led you to (style and iconography)."
+   }
+  },
+  {
+   "kind": "think",
+   "label": "Your last discovery speaks to you",
+   "solveLabel": "Where is my sister now?",
+   "riddle": {
+    "en": "You listened to my sorrowful story and showed me such kindness—thank you.\nI have other sisters whom I am deeply connected to, scattered all across Istanbul.\nOne of them, in particular, stands upside down in a dark, damp underground palace.\nThere’s no need to set off on another journey—stay here with me.\nBut tell me, where is my sister now?",
+    "tr": "Dinledin benim hüzünlü hikayemi, ilgi gösterdin, teşekkür ederim\nBenim kalpten bağlı olduğum başka kız kardeşlerim de var, dağılmışlar İstanbul’un dört bir yanına\nHele biri duruyor baş aşağı, karanlık ve nemli bir yeraltı sarayında\nGerek yok yeni bir yolculuğa, kal yanımda\nAma söyle bana, nerede kardeşim şu anda?"
+   },
+   "hint": "Justinian's underground water reservoir in Sultanahmet, with a forest of columns.",
+   "accept": [
+    [
+     "60dc698d",
+     "57b9db76",
+     "ef281a9d",
+     "70226e1c",
+     "62d4a49f"
+    ]
+   ],
+   "photo": false,
+   "task": {
+    "points": 1,
+    "minWords": 40,
+    "q": "Please identify the place in question and provide brief information about its history and architecture."
+   }
+  }
+ ],
+ "ending": {
+  "en": "And here we are—you’ve completed the adventure! May Athena Nike crown your hair with a laurel wreath.\nDon’t forget this day: you traveled through time, wandering through ancient Istanbul step by step, like a Roman.\nAll of Istanbul’s monuments celebrate you from the bottom of their hearts.\nAnd they have one final message for you: don’t stay away too long—come visit us again as soon as you can!",
+  "tr": "İşte böylece tamamladın bu macerayı, Athena Nike koymalı saçlarına defneden tacı\nUnutma bugününü, yolculuk ettin zamanda, dolaştın kadim İstanbul’u bir Romalı gibi adım adım\nKutluyor İstanbul’un tüm yapıtları kalpten seni\nDiyorlar ki uzatma arayı, ziyaret et yine en kısa zamanda bizi!"
+ }
+};
+/* ===================================================================== */
+
+const KEY="arthunt-v3";
+const $=s=>document.querySelector(s);
+const app=$("#app");
+
+function toks(s){return String(s).toLocaleLowerCase("tr").replace(/ı/g,"i").normalize("NFD").replace(/[̀-ͯ]/g,"").split(/[^a-z0-9]+/).filter(Boolean)}
+function fnv(s){let x=0x811c9dc5;for(let i=0;i<s.length;i++){x^=s.charCodeAt(i);x=Math.imul(x,0x01000193)>>>0}return x}
+function hx(s){return fnv(s).toString(16).padStart(8,"0")}
+function keyHash(s){return hx(toks(s).join(""))}
+function matches(input,groups){
+  const t=toks(input), seen=new Set();
+  for(let i=0;i<t.length;i++)for(let n=1;n<=3&&i+n<=t.length;n++)seen.add(hx(t.slice(i,i+n).join("")));
+  return groups.every(g=>g.some(h=>seen.has(h)));
+}
+function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function pad(n){return String(n).padStart(2,"0")}
+function fmt(d){return `${pad(d.getDate())}.${pad(d.getMonth()+1)}.${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`}
+function words(s){return (String(s).trim().match(/\S+/g)||[]).length}
+// Proof code changes every 10 minutes; TAs can recompute it in TA tools.
+function proofCode(teamId,stepNo,d){
+  const slot=`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${Math.floor(d.getMinutes()/10)}`;
+  return fnv(`${CONFIG.secret}|${teamId}|${stepNo}|${slot}`).toString(36).toUpperCase().slice(-5).padStart(5,"0");
+}
+function dist(a,b,c,d){const R=6371000,r=Math.PI/180,x=(c-a)*r,y=(d-b)*r;
+  const h=Math.sin(x/2)**2+Math.cos(a*r)*Math.cos(c*r)*Math.sin(y/2)**2;return 2*R*Math.asin(Math.sqrt(h))}
+
+const canDownload=(()=>{try{return window.self===window.top}catch(e){return false}})();
+let S=load(), adminMode=location.hash==="#admin", resetAsk=false;
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return {}}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function team(){return CONFIG.teams.find(t=>t.id===S.team)}
+function steps(){const t=team();return t?[...t.stops,...CONFIG.sharedStops]:[]}
+function cur(){return S.cur||(S.cur={solved:false,said:"",gps:null,check:false,photo:null,hint:false,text:""})}
+
+function riddleHtml(r){
+  return `<div class="riddle">${esc(r.en)}</div>${r.tr?`<details><summary>Türkçesi</summary><div class="riddle">${esc(r.tr)}</div></details>`:""}`;
+}
+
+/* ---------------- screens ---------------- */
+function render(){
+  if(adminMode) return renderAdmin();
+  if(!team()) return renderStart();
+  if(S.idx>=steps().length) return renderDone();
+  renderStep();
+}
+
+function renderStart(){
+  app.innerHTML=`
+    <span class="pill" style="align-self:flex-start">${esc(CONFIG.course)}</span>
+    <h1>${esc(CONFIG.title)}</h1>
+    <p class="sub">${esc(CONFIG.intro)}</p>
+    <div class="card">
+      <label for="t">Team</label>
+      <select id="t">${CONFIG.teams.map(t=>`<option value="${t.id}">${esc(t.name)} · ${esc(t.concept)}</option>`).join("")}</select>
+      <label for="p">Team code</label>
+      <input id="p" inputmode="numeric" autocomplete="off">
+      <label for="nm">Names and surnames of everyone in the group</label>
+      <input id="nm" autocomplete="off" placeholder="e.g. Ayşe Yılmaz, Can Demir">
+      <label for="sc">Section / TA's name</label>
+      <input id="sc" autocomplete="off">
+      <button id="go">Start the hunt</button>
+      <p class="msg bad" id="e"></p>
+    </div>`;
+  const go=()=>{
+    const pin=$("#p").value.trim();
+    if(pin===CONFIG.adminPin){adminMode=true;return render()}
+    const t=CONFIG.teams.find(x=>x.id===$("#t").value);
+    if(pin!==t.pin){$("#e").textContent="That code doesn't match this team. Check the code and the team you picked.";return}
+    if(!$("#nm").value.trim()){$("#e").textContent="Add the names of everyone in your group.";return}
+    S={team:t.id,names:$("#nm").value.trim(),section:$("#sc").value.trim(),idx:0,log:[],started:Date.now()};save();render();
+  };
+  $("#go").onclick=go;
+}
+
+function renderStep(){
+  const t=team(), list=steps(), s=list[S.idx], c=cur(), n=S.idx+1, place=s.kind==="place";
+  const gpsNeeded=place&&s.lat!=null;
+  const gpsDone=!gpsNeeded||(c.gps&&(c.gps.ok||c.gps.unavailable));
+  const checkDone=!s.check||c.check;
+  const photoDone=!s.photo||!!c.photo;
+  const taskDone=!s.task||words(c.text)>=s.task.minWords;
+  const allDone=c.solved&&gpsDone&&checkDone&&photoDone&&taskDone;
+  const lock=c.solved?"":" locked";
+  let k=1; const items=[];
+
+  items.push(`<div class="step"><div class="dot ${c.solved?"done":""}">${k++}</div><div class="body">
+    <b>${esc(s.solveLabel||"Solve the riddle")}</b>
+    ${c.solved?`<p class="msg ok">${place?`Correct: “${esc(c.said)}”. Head there now.`:`Correct: “${esc(c.said)}”.`}</p>`:`
+      <input id="ans" autocomplete="off" placeholder="Your answer">
+      <button class="ghost" id="solve">Check</button><p class="msg bad" id="ae"></p>`}
+  </div></div>`);
+
+  if(gpsNeeded) items.push(`<div class="step${lock}"><div class="dot ${c.solved&&gpsDone?"done":""}">${k++}</div><div class="body">
+    <b>Location check</b>
+    ${c.gps?`<p class="msg ${c.gps.ok?"ok":"bad"}">${esc(c.gps.text)}</p>`:`<p class="small">Use this when you've arrived.</p>`}
+    ${c.solved&&!(c.gps&&(c.gps.ok||c.gps.unavailable))?`<button class="ghost" id="gps">I'm here, check my location</button>`:""}
+  </div></div>`);
+
+  if(s.check) items.push(`<div class="step${lock}"><div class="dot ${c.check?"done":""}">${k++}</div><div class="body">
+    <b>On-site detail</b>
+    <p class="small">${esc(s.check.q)}</p>
+    ${c.check?`<p class="msg ok">Correct.</p>`:c.solved?`
+      <input id="chk" autocomplete="off" placeholder="What you see">
+      <button class="ghost" id="chkBtn">Check</button><p class="msg bad" id="ce"></p>`:""}
+  </div></div>`);
+
+  if(s.photo) items.push(`<div class="step${lock}"><div class="dot ${c.photo?"done":""}">${k++}</div><div class="body">
+    <b>Team photo</b>
+    <p class="small">${esc(s.photoNote||"Your group together at the spot.")} The photo is stamped with the time, location and a proof code.</p>
+    ${c.photo?`<img class="proof" src="${c.photo}" alt="Stamped team photo">`:""}
+    ${c.solved?`<button ${c.photo?'class="ghost"':""} id="shoot">${c.photo?"Retake photo":"Take photo"}</button><p class="msg bad" id="pe"></p>`:""}
+  </div></div>`);
+
+  if(s.task) items.push(`<div class="step${lock}"><div class="dot ${c.solved&&taskDone?"done":""}" id="tdot">${k++}</div><div class="body">
+    <b>Question</b> <span class="pts">${s.task.points} ${s.task.points===1?"point":"points"}</span>
+    <p class="small" style="color:var(--ink)">${esc(s.task.q)}</p>
+    ${c.solved?`<textarea id="txt" placeholder="Write your group's answer here">${esc(c.text)}</textarea>
+      <div class="wc" id="wc"></div>`:""}
+  </div></div>`);
+
+  const proofReady=s.photo&&c.photo;
+  const fname=c.code?`Team${S.team}_Step${n}_${c.code}`:"";
+  app.innerHTML=`
+    <div class="top"><span class="pill">${esc(t.name)} · ${esc(t.concept)}</span>
+      <span class="small">Step ${n} of ${list.length}</span></div>
+    <div class="progress">${list.map((_,i)=>`<span class="${i<=S.idx?"on":""}"></span>`).join("")}</div>
+    <div class="card">
+      <h2>${esc(s.label)}</h2>
+      ${riddleHtml(s.riddle)}
+      ${s.hint?(c.hint?`<p class="small"><b>Hint:</b> ${esc(s.hint)}</p>`:`<button class="ghost" id="hint">Show hint (your TAs will see you used it)</button>`):""}
+    </div>
+    <div class="card"><h2>${place?"Find it and prove you're there":"Answer"}</h2><div class="steps">${items.join("")}</div></div>
+    ${proofReady?`<div class="card">
+      <h2>Save your photo</h2>
+      <p class="small" style="margin-bottom:.6em">Save the photo to your phone now. At the end you'll upload all your photos to the course page. The saved file is named:</p>
+      <p class="code" style="margin:0;overflow-wrap:anywhere">${esc(fname)}</p>
+      ${canDownload?`<button class="ghost" id="dl">Save photo to phone</button>`:`<p class="small">Press and hold the photo above and choose Save.</p>`}
+    </div>`:""}
+    <button id="next" ${allDone?"":"disabled"}>${n===list.length?"Finish the hunt":"Unlock the next riddle"}</button>
+    <p class="small" id="nextNote" style="text-align:center">${allDone?"":"Complete every step above to continue."}</p>`;
+
+  const h=$("#hint"); if(h) h.onclick=()=>{c.hint=true;save();render()};
+  const sv=$("#solve"); if(sv){
+    const go=()=>{const v=$("#ans").value; if(matches(v,s.accept)){c.solved=true;c.said=v.trim();save();render()}else $("#ae").textContent="Not quite. Read the riddle again."};
+    sv.onclick=go; $("#ans").onkeydown=e=>{if(e.key==="Enter")go()};
+  }
+  const g=$("#gps"); if(g) g.onclick=()=>checkGps(s);
+  const cb=$("#chkBtn"); if(cb){
+    const go=()=>{if(matches($("#chk").value,s.check.accept)){c.check=true;save();render()}else $("#ce").textContent="Not quite. Look again."};
+    cb.onclick=go; $("#chk").onkeydown=e=>{if(e.key==="Enter")go()};
+  }
+  const sh=$("#shoot"); if(sh) sh.onclick=openCamera;
+  const dl=$("#dl"); if(dl) dl.onclick=()=>savePhoto(c.photo,fname+".jpg");
+  const tx=$("#txt");
+  const upd=()=>{
+    if(!tx) return;
+    const w=words(tx.value), need=s.task.minWords, ok=w>=need;
+    $("#wc").textContent=ok?`${w} words`:`${w} / at least ${need} words`;
+    $("#wc").className="wc"+(ok?" ok":"");
+    $("#tdot").className="dot"+(ok?" done":"");
+    const all=c.solved&&gpsDone&&checkDone&&photoDone&&ok;
+    $("#next").disabled=!all; $("#nextNote").textContent=all?"":"Complete every step above to continue.";
+  };
+  if(tx){tx.oninput=()=>{c.text=tx.value;save();upd()};upd()}
+  $("#next").onclick=()=>{
+    const cc=cur(); if(!(cc.solved&&gpsDone&&checkDone&&photoDone&&(!s.task||words(cc.text)>=s.task.minWords))) return;
+    S.log.push({label:s.label,said:cc.said,time:cc.time||fmt(new Date()),code:cc.code||"",hint:cc.hint,
+      gps:cc.gps?cc.gps.text:"",q:s.task?s.task.q:"",points:s.task?s.task.points:0,text:cc.text||""});
+    S.idx++; S.cur=null; save(); render(); scrollTo(0,0);
+  };
+}
+
+function checkGps(s){
+  const c=cur();
+  const fail=()=>{c.gps={ok:false,unavailable:true,text:"Location isn't available on this phone, so your photo will be marked “no GPS”."};save();render()};
+  if(!navigator.geolocation) return fail();
+  c.gps={ok:false,text:"Finding your location…"}; render();
+  navigator.geolocation.getCurrentPosition(p=>{
+    const d=dist(p.coords.latitude,p.coords.longitude,s.lat,s.lng);
+    c.pos=[p.coords.latitude.toFixed(5),p.coords.longitude.toFixed(5)];
+    c.gps=d<=CONFIG.gpsRadiusMeters?{ok:true,text:`You're here (${Math.round(d)} m away).`}
+      :{ok:false,text:`You're about ${Math.round(d)} m away. Get closer and try again.`};
+    save();render();
+  },fail,{enableHighAccuracy:true,timeout:15000,maximumAge:0});
+}
+
+/* ---------------- camera and stamp ---------------- */
+let stream=null;
+async function openCamera(){
+  if(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){
+    try{
+      stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:"environment",width:{ideal:1920}},audio:false});
+      $("#video").srcObject=stream; $("#cam").hidden=false; return;
+    }catch(e){}
+  }
+  $("#photoIn").click();
+}
+function savePhoto(dataUrl,name){
+  const a=document.createElement("a"); a.href=dataUrl; a.download=name; document.body.appendChild(a); a.click(); a.remove();
+}
+function closeCamera(){if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;$("#cam").hidden=true}
+$("#camCancel").onclick=closeCamera;
+$("#camShoot").onclick=()=>{
+  const v=$("#video"), cv=document.createElement("canvas");
+  cv.width=v.videoWidth; cv.height=v.videoHeight; cv.getContext("2d").drawImage(v,0,0);
+  closeCamera(); stamp(cv,"live camera");
+};
+$("#photoIn").onchange=e=>{
+  const f=e.target.files[0]; e.target.value=""; if(!f) return;
+  if(Date.now()-f.lastModified>15*60*1000){$("#pe").textContent="This photo is older than 15 minutes. Take a new one now.";return}
+  const img=new Image(); img.onload=()=>{
+    const cv=document.createElement("canvas"), r=Math.min(1,1600/Math.max(img.width,img.height));
+    cv.width=Math.round(img.width*r); cv.height=Math.round(img.height*r);
+    cv.getContext("2d").drawImage(img,0,0,cv.width,cv.height);
+    URL.revokeObjectURL(img.src); stamp(cv,"phone camera");
+  }; img.src=URL.createObjectURL(f);
+};
+function stamp(cv,source){
+  const c=cur(), now=new Date(), code=proofCode(S.team,S.idx+1,now);
+  const ctx=cv.getContext("2d"), W=cv.width, fs=Math.max(16,Math.round(W/40)), H=fs*3.6;
+  ctx.fillStyle="rgba(0,0,0,.62)"; ctx.fillRect(0,cv.height-H,W,H);
+  ctx.fillStyle="#fff"; ctx.font=`600 ${fs}px sans-serif`; ctx.textBaseline="top";
+  ctx.fillText(`TEAM ${S.team} · STEP ${S.idx+1} · ${fmt(now)} · CODE ${code}`,fs*.6,cv.height-H+fs*.5);
+  ctx.font=`${Math.round(fs*.8)}px sans-serif`;
+  ctx.fillText(`${c.pos?`GPS ${c.pos[0]}, ${c.pos[1]}`:"no GPS"} · ${source} · ${CONFIG.title}`,fs*.6,cv.height-H+fs*1.9);
+  c.photo=cv.toDataURL("image/jpeg",.78); c.time=fmt(now); c.code=code; c.photoAt=now.getTime();
+  save(); render();
+}
+
+/* ---------------- finish ---------------- */
+function reportText(){
+  const t=team(), total=S.log.reduce((a,l)=>a+l.points,0);
+  let out=`${CONFIG.course}\n${CONFIG.title}\n${t.name} · ${t.concept}\nNames: ${S.names}\nSection / TA: ${S.section||"-"}\n`;
+  S.log.forEach((l,i)=>{
+    out+=`\n— Step ${i+1}: ${l.label} —\nRiddle answer: ${l.said}\n`;
+    if(l.code) out+=`Photo: ${l.time} · proof code ${l.code}${l.gps?` · ${l.gps}`:""}\n`;
+    out+=`Hint used: ${l.hint?"yes":"no"}\n`;
+    if(l.q) out+=`Question (${l.points} pt${l.points===1?"":"s"}): ${l.q}\nAnswer: ${l.text.trim()}\n`;
+  });
+  return out+`\n(Questions total: ${total} points)\n`;
+}
+function renderDone(){
+  const t=team();
+  app.innerHTML=`
+    <span class="pill" style="align-self:flex-start">${esc(t.name)} · ${esc(t.concept)}</span>
+    <h1>You made it.</h1>
+    <div class="card">${riddleHtml(CONFIG.ending)}</div>
+    <div class="card tablebox"><h2>Your route</h2><table class="log">
+      <tr><td><b>Step</b></td><td><b>Time</b></td><td><b>Code</b></td><td><b>Hint</b></td></tr>
+      ${S.log.map((l,i)=>`<tr><td>${i+1}. ${esc(l.said)}</td><td>${esc(l.code?l.time:"")}</td><td class="code">${esc(l.code)}</td><td>${l.hint?"used":"no"}</td></tr>`).join("")}
+    </table></div>
+    <div class="card"><h2>Submit your answers</h2>
+      <p class="small">Copy everything below and paste it into the assignment submission on the course page, and upload your saved photos there too. Each photo is named with your team, step and proof code.</p>
+      <textarea id="report" readonly></textarea>
+      <button id="copy">Copy all answers</button><p class="msg ok" id="cm"></p>
+      <a class="btn ghost" href="${esc(CONFIG.submitUrl)}" target="_blank" rel="noopener">${esc(CONFIG.submitLabel)}</a>
+    </div>`;
+  $("#report").value=reportText();
+  $("#copy").onclick=()=>{
+    const ta=$("#report");
+    const fallback=()=>{ta.focus();ta.select();ta.setSelectionRange(0,ta.value.length);$("#cm").textContent="Text selected. Use your phone's Copy."};
+    try{navigator.clipboard.writeText(ta.value).then(()=>$("#cm").textContent="Copied.",fallback)}catch(e){fallback()}
+  };
+}
+
+/* ---------------- TA tools (#admin, or team code 9999) ---------------- */
+function renderAdmin(){
+  app.innerHTML=`
+    <h1>TA tools</h1>
+    <div class="card"><h2>Check a submission</h2>
+      <p class="small">Enter the team, the step and the time stamped on the photo. If the code on the photo matches, the photo was taken in that 10-minute window. A photo with a wrong or missing code was not taken in this app.</p>
+      <div class="row"><div><label for="vt">Team</label><select id="vt">${CONFIG.teams.map(t=>`<option>${t.id}</option>`).join("")}</select></div>
+      <div><label for="vs">Step no.</label><input id="vs" type="number" min="1" value="1"></div></div>
+      <label for="vd">Date and time on the photo</label><input id="vd" type="datetime-local">
+      <div id="vr"></div>
+</div>
+    <div class="card"><h2>Make accepted answers</h2>
+      <p class="small">Separate keywords with commas. If the answer needs two things (e.g. two languages), separate the groups with a semicolon. Paste the result into CONFIG as <code>accept</code>.</p>
+      <input id="ha" placeholder="e.g. greek, yunanca ; latin, latince"><p id="hr" class="msg ok code" style="overflow-wrap:anywhere;letter-spacing:0"></p>
+      <label for="tt">Test an answer against it</label><input id="tt" autocomplete="off" placeholder="What a student might type"><p id="tr" class="msg"></p></div>
+    <div class="card"><h2>This phone</h2>
+      ${resetAsk?`<p class="msg bad">Erase all hunt progress on this phone?</p><div class="row"><button id="rsYes">Erase</button><button class="ghost" id="rsNo">Keep</button></div>`
+        :`<button class="ghost" id="rs">Reset progress on this phone</button>`}
+      <p class="msg ok" id="rsMsg"></p>
+      <button class="ghost" id="bk">Back to the hunt</button></div>`;
+  const v=()=>{const d=$("#vd").value; if(!d){$("#vr").innerHTML="";return}
+    const code=proofCode($("#vt").value,+$("#vs").value,new Date(d));
+    $("#vr").innerHTML=`<p class="msg ok">Expected code: <span class="code">${code}</span></p>`};
+  ["#vt","#vs","#vd"].forEach(id=>$(id).oninput=v);
+  let groups=[];
+  const test=()=>{const x=$("#tt").value; if(!x||!groups.length){$("#tr").textContent="";return}
+    const ok=matches(x,groups); $("#tr").className="msg "+(ok?"ok":"bad"); $("#tr").textContent=ok?"Accepted.":"Not accepted."};
+  $("#ha").oninput=e=>{
+    groups=e.target.value.split(";").map(g=>g.split(",").map(w=>w.trim()).filter(w=>toks(w).length).map(keyHash)).filter(g=>g.length);
+    $("#hr").textContent=groups.length?`accept:${JSON.stringify(groups)}`:""; test();
+  };
+  $("#tt").oninput=test;
+  const rs=$("#rs"); if(rs) rs.onclick=()=>{resetAsk=true;renderAdmin()};
+  const y=$("#rsYes"); if(y) y.onclick=()=>{S={};save();resetAsk=false;renderAdmin();$("#rsMsg").textContent="Progress erased."};
+  const no=$("#rsNo"); if(no) no.onclick=()=>{resetAsk=false;renderAdmin()};
+  $("#bk").onclick=()=>{adminMode=false;if(location.hash==="#admin")history.replaceState(null,"",location.pathname+location.search);render()};
+}
+window.addEventListener("hashchange",()=>{adminMode=location.hash==="#admin";render()});
+render();
+</script>
+
+</body>
+</html>
