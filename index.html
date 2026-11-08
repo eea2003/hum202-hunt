@@ -106,13 +106,14 @@ code{font-size:.9em}
    ===================================================================== */
 const CONFIG = {
  "title": "Historical Peninsula Hunt",
- "course": "HUM 202 · Introduction to Western Art",
+ "course": "HUM 202 · Introduction to Western Art · Fall 2026-2027",
  "intro": "Solve each riddle, go to the place it describes and prove you were there. Your answers and photos are saved on this phone as you go. At the end you download one PDF and upload it to SUCourse.",
+ "startPoint": "Start at Eminönü Square, in front of the New Mosque (Yeni Cami). Open your first riddle there.",
  "fileYear": "2026",
  "tas": [
-  "TA Name 1",
-  "TA Name 2",
-  "TA Name 3"
+  "Gaye Kuas",
+  "Çise İpek Çınar",
+  "Çağla Bölek"
  ],
  "submitUrl": "https://example.edu/course/assignment-PLACEHOLDER",
  "submitLabel": "Open assignment submission",
@@ -121,95 +122,44 @@ const CONFIG = {
  "secret": "CHANGE-ME-2026",
  "teams": [
   {
-   "id": "A",
-   "name": "Team A",
-   "concept": "Emperorship",
+   "id": "1",
+   "name": "Group 1",
+   "sections": "A1, A2, A3",
+   "concept": "Commemoration",
    "stops": [
     {
      "kind": "place",
+     "check": null,
+     "photo": true,
      "label": "Riddle 1",
      "riddle": {
-      "en": "I have been here for centuries—if only you knew all that I have witnessed.\nSince the sixth century, my dome has sent greetings to the seagulls soaring over Istanbul’s skies.\nThe meaning of my name is sacred wisdom; I have reflected the light of both religions.\nThese days, the line is often long—you may not even be able to get inside. But tell me, who am I?",
-      "tr": "Ben yüzyıllardır buradayım, bir bilsen nelere tanıklık ettim\nKubbem selam yollar İstanbul semalarında uçan martılara altıncı yüzyıldan beri\nKutsal bilgeliktir adımın anlamı, ışığını yansıttım her iki dinin\nGünümüzde çok sıra var, belki içeriye giremezsin, ama söyle bakalım ben kimim?"
+      "en": "Justinian built me; before building my sister, I was born\nIn Kadırga, by the walls, a step from the sea I'm found.\nI took my name from my sister, though I'm older; it is true.\nYet no one calls me \"great\"; it's always \"little\" they do."
      },
-     "hint": "Commissioned by Justinian, it faces the Blue Mosque across Sultanahmet Square.",
+     "hint": "It was first a church dedicated to Saints Sergius and Bacchus.",
      "accept": [
       [
-       "5e5f175d",
-       "c4f7b879",
-       "c848a30b",
-       "7563911c",
-       "a046a882",
-       "63d3a482",
-       "3bdcd686",
-       "d945ffbd"
+       "dfd0d07b",
+       "dfd0d07b",
+       "7c3a1c91",
+       "e3d4d188",
+       "4c64abf7",
+       "bd55a821",
+       "eb976f9e",
+       "b51dee8f",
+       "0fa293a0"
       ]
      ],
-     "lat": 41.00858,
-     "lng": 28.98022,
-     "check": {
-      "q": "Count them from outside: how many minarets stand around the building?",
-      "accept": [
-       [
-        "310ca263",
-        "2f69f5a5",
-        "25c1e212"
-       ]
-      ]
-     },
-     "photo": true,
-     "photoNote": "You in front of the building, with the dome visible.",
+     "lat": 41.00271,
+     "lng": 28.97247,
+     "photoNote": "You in front of the building or in its courtyard.",
      "task": {
-      "points": 3,
-      "minWords": 80,
-      "q": "Please identify the monument that the riddle describes and provide general information about it. Due to the possible long queue at the premises, you do not have to get inside but please observe the building from outside and describe its architecture."
-     }
-    },
-    {
-     "kind": "think",
-     "label": "Riddle 2",
-     "solveLabel": "What happened, and where?",
-     "riddle": {
-      "en": "You found me and saw me—let your eyes rejoice!\nBut remember, nothing comes from nothing; everything has a reason.\nThink back to the past and tell me: what happened that led them to build me in all my grandeur?\nWhere did horses once thunder at full gallop, only for the ground to run red with blood that day?\nWhen the answer comes to mind, go there and see for yourself—does it still look as it once did?",
-      "tr": "Buldun ve gördün beni, bayram etsin gözlerin!\nAma unutma ki hiçbir şey yoktan varolmaz, vardır her şeyin bir sebebi\nDüşün geçmişi ve söyle, ne oldu da inşaa ettiler görkemli beni?\nNeresiydi atların dörtnala koştuğu ama o gün kana bulanan yer?\nGelince aklına doğru cevap, ziyaret et orayı ve söyle, hala eskisi gibi mi?"
-     },
-     "hint": "In 532 a rivalry between the Blues and the Greens turned into a revolt against Justinian.",
-     "accept": [
-      [
-       "1e1e2d28",
-       "5bf1d6f8",
-       "577633d9",
-       "3ea7ff43"
-      ]
-     ],
-     "photo": false,
-     "task": {
-      "points": 3,
-      "minWords": 80,
-      "q": "Please answer the question given in the riddle; write the historical content of the previous building and explain its relation to the place that this riddle directs you to. Once you write down your answers, proceed to that location."
+      "points": null,
+      "minWords": 60,
+      "q": "Küçük Ayasofya was built to remember and honor someone. Who commissioned it? Who does it honor, and why?"
      }
     },
     {
      "kind": "place",
-     "label": "Riddle 3",
-     "solveLabel": "What is it?",
-     "riddle": {
-      "en": "Tell me, please—do I still look good?\nAs you can see, I’ve lost a little of my old form; there are no longer any horses, boxes, or teams here…\nBut don’t let my modern appearance fool you—I still preserve a few things from the old days, right at my very heart!\nBut let’s take it slowly, one step at a time… Just ahead, there’s something that pierces the sky with its pointed tip, hailing from the lands of an ancient culture and adorned with picture-like inscriptions…\nTell me, what is it?",
-      "tr": "Söyle bana ne olur, iyi gözüküyor muyum hala?\nGörüyorsun ya birazcık kaybettim eski formumu; yok artık burada ne atlar, ne localar, ne de takımlar…\nAma aldanmasın gözlerin modern halime, koruyorum hala eski günlerden birkaç şey, hem de tam kalbimde!\nAma yavaş olalım, adım adım gidelim…Sivri ucuyla göğü delen, kadim bir kültürün topraklarından kopagelmiş, resimli yazılarla bezenmiş bir şey var hemen ileride…Söyle, o ne?"
-     },
-     "hint": "It was carved for a pharaoh in Egypt and shipped to Constantinople under Theodosius.",
-     "accept": [
-      [
-       "8e416b82",
-       "e1fcec63",
-       "dbfce2f1",
-       "84e32cb2",
-       "a4a92703",
-       "a0490bde"
-      ]
-     ],
-     "lat": 41.00583,
-     "lng": 28.97528,
      "check": {
       "q": "Look at the marble base: the inscriptions on it are written in two languages. Which ones?",
       "accept": [
@@ -226,369 +176,355 @@ const CONFIG = {
       ]
      },
      "photo": true,
+     "label": "Riddle 2",
+     "riddle": {
+      "en": "From Egypt I sailed,\nCarved with victories in pictures.\nAn emperor named Theodosius gave me a new home,\nWhere chariots once raced and the crowds roared.\nOn a marble base I stand, under the emperors gaze,\nIn the old Hippodrome, tall and pointed I rise.\nNow guess who am I?"
+     },
+     "hint": "It was cut in Egypt for a pharaoh, long before Rome.",
+     "accept": [
+      [
+       "8e416b82",
+       "e1fcec63",
+       "dbfce2f1",
+       "84e32cb2",
+       "a4a92703",
+       "a0490bde"
+      ]
+     ],
+     "lat": 41.00583,
+     "lng": 28.97528,
      "photoNote": "You with the whole monument in the frame, base included.",
      "task": {
-      "points": 1,
-      "minWords": 40,
-      "q": "Please identify the artwork in question and elaborate it on its historical context."
+      "points": null,
+      "minWords": 60,
+      "q": "Why did Emperor Theodosius bring it to Constantinople, and what does the carved marble base he added commemorate?"
      }
     },
     {
      "kind": "place",
-     "label": "Riddle 4",
-     "solveLabel": "What is it?",
+     "check": null,
+     "photo": true,
+     "label": "Riddle 3",
      "riddle": {
-      "en": "Wait, why the hurry? Don’t leave just yet!\nLook, there’s a spiral-shaped structure right next door.\nGo closer and take a look—do you think it has always looked like this?\nImagine it, and tell us: what did it look like in the past?\nAnd where is one of its three Musketeers now?",
-      "tr": "Dur, bu ne acele, hemen gitme!\nBak hemen yan tarafta var bir sarmal yapı\nGit yakınına ve incele, hep böyle mi gözüküyordu sence?\nHayal et ve anlat bize, nasıldı geçmişteki hali?\nVe nerede üç silahşörlerden biri şimdi?"
+      "en": "In the shade of Gülhane, where old treasures wait,\nOsman Hamdi Bey built a museum great.\nGo inside, and in armor of marble you’ll find\nA goddess and a wolf decorate my chest,\nMy foot on an enemy shows I’m the best.\nNow guess who I am?"
      },
-     "hint": "Bronze, brought from the Sanctuary of Apollo at Delphi.",
+     "hint": "The emperor who built a famous wall across northern Britain.",
      "accept": [
       [
-       "449aeafc",
-       "93125562",
-       "838faeb1",
-       "3882629a",
-       "e9f5a9e7"
+       "9bea7e70",
+       "3a45c1c4",
+       "f8e1d721",
+       "189d6036",
+       "eee7775d"
       ]
      ],
-     "lat": 41.00564,
-     "lng": 28.97514,
+     "lat": 41.01167,
+     "lng": 28.98111,
+     "photoNote": "You next to the statue.",
+     "task": {
+      "points": null,
+      "minWords": 60,
+      "q": "Why would a Roman emperor have his statue made in armor, with his foot on a defeated enemy? What message does the image on his breastplate send about his rule?"
+     }
+    }
+   ]
+  },
+  {
+   "id": "2",
+   "name": "Group 2",
+   "sections": "B1, B2, B3",
+   "concept": "Porphyry",
+   "stops": [
+    {
+     "kind": "place",
+     "check": null,
+     "photo": true,
+     "label": "Riddle 1",
+     "riddle": {
+      "en": "Constantine raised me the day the city was born.\nOf purple stone I'm made, from distant lands.\nFires blackened my skin, earthquakes shook my waist,\nSo they bound me with iron belts to keep me in place.\nMy name comes from those bands; on Divanyolu I stand.\nNow guess who I am?"
+     },
+     "hint": "A tram stop on Divanyolu has the same name.",
+     "accept": [
+      [
+       "23f695be",
+       "23f695be",
+       "19de45f0",
+       "c884b16b",
+       "fd6e1d0c",
+       "b9526376",
+       "b1266223",
+       "4f48d786"
+      ]
+     ],
+     "lat": 41.00866,
+     "lng": 28.97138,
+     "photoNote": "You with the column behind you.",
+     "task": {
+      "points": null,
+      "minWords": 60,
+      "q": "What is the reason behind Emperor Constantine’s choice of erecting such an imperial monument of porphyry in the city on the day of its inauguration?"
+     }
+    },
+    {
+     "kind": "place",
+     "check": null,
+     "photo": true,
+     "label": "Riddle 2",
+     "riddle": {
+      "en": "I was built at the beginning of the sixteenth century\nA sultan commissioned me with thousands of gold coins\nI am at the heart of the walled city, on the site of an ancient forum\nAt my courtyard and outer walls, one sees beautiful purple stones\nWho am I?"
+     },
+     "hint": "It carries the name of the son of Mehmed the Conqueror.",
+     "accept": [
+      [
+       "9e7228a1",
+       "d95e7201",
+       "c95e58d1",
+       "8e720f71",
+       "977df28d"
+      ]
+     ],
+     "lat": 41.01036,
+     "lng": 28.96516,
+     "photoNote": "You next to one of the purple stones in the courtyard or on the outer walls.",
+     "task": {
+      "points": null,
+      "minWords": 60,
+      "q": "Why did the Ottomans use porphyry stones in an imperial mosque?"
+     }
+    },
+    {
+     "kind": "place",
+     "check": null,
+     "photo": true,
+     "label": "Riddle 3",
+     "riddle": {
+      "en": "Near Gülhane Park, my treasures lie.\nTelling stories of times gone by.\nStatues and sarcophagi fill my halls,\nWhile ancient stories echo through my walls.\nWhat am I?"
+     },
+     "hint": "Founded by Osman Hamdi Bey, below Topkapı Palace.",
+     "accept": [
+      [
+       "f59104e9",
+       "028c0923",
+       "adb01a7c",
+       "b2ae7168",
+       "bcc2975b",
+       "56540090"
+      ]
+     ],
+     "lat": 41.01167,
+     "lng": 28.98111,
+     "photoNote": "You next to the porphyry sarcophagi in the courtyard.",
+     "task": {
+      "points": null,
+      "minWords": 60,
+      "q": "For whom might the porphyry sarcophagi you see in the courtyard of the museum have been made?"
+     }
+    }
+   ]
+  },
+  {
+   "id": "3",
+   "name": "Group 3",
+   "sections": "C1, C2",
+   "concept": "Spolia",
+   "stops": [
+    {
+     "kind": "place",
+     "check": null,
+     "photo": true,
+     "label": "Riddle 1",
+     "riddle": {
+      "en": "In the heart of Istanbul, near a famous square,\nA place of water and steam once welcomed people there.\nI have a dome but I am not Roman.\nWhere once people bathed and relaxed in my halls,\nNow water's history and culture are told through my walls.\nWhat am I?"
+     },
+     "hint": "An Ottoman bathhouse built for Sultan Bayezid II, now a museum on Ordu Caddesi.",
+     "accept": [
+      [
+       "6434f3bb",
+       "915bd396",
+       "59e2a2ea",
+       "915bd396",
+       "30cb3740",
+       "02e7e549",
+       "ba348544",
+       "3891d012",
+       "00755878"
+      ]
+     ],
+     "lat": 41.00934,
+     "lng": 28.96628,
+     "photoNote": "You next to a piece of spolia you found here.",
+     "task": {
+      "points": null,
+      "minWords": 60,
+      "q": "Which examples of spolia can you find in the Beyazıt Hamamı Museum? Where did they come from?"
+     }
+    },
+    {
+     "kind": "place",
+     "check": null,
+     "photo": true,
+     "label": "Riddle 2",
+     "riddle": {
+      "en": "In Beyazıt Square, where people pass each day,\nFragments of my past remain here.\nA master emperor rebuilt me long ago.\nWith arches and a column, I am known to all.\nOnce a great forum, busy and grand,\nWhat am I, whose stones still stand?"
+     },
+     "hint": "Look along Ordu Caddesi for broken columns carved with a tear-drop pattern.",
+     "accept": [
+      [
+       "2267a30c",
+       "3785d92f",
+       "aa71fea6",
+       "227fa7f2",
+       "60101f5d",
+       "afce0cb8",
+       "0642e0ef"
+      ]
+     ],
+     "lat": 41.00905,
+     "lng": 28.96392,
+     "photoNote": "You with the column fragments behind you.",
+     "task": {
+      "points": null,
+      "minWords": 60,
+      "q": "Where did the spolia used in the Theodosius Column originate, and what was its original purpose?"
+     }
+    },
+    {
+     "kind": "place",
+     "check": null,
+     "photo": true,
+     "label": "Riddle 3",
+     "riddle": {
+      "en": "Near Gülhane Park, all my treasures lie.\nTelling stories of glorious times gone by.\nStatues, sculptures, and sarcophagi fill my halls,\nWhile ancient stories echo through my walls.\nWhat am I?"
+     },
+     "hint": "Founded by Osman Hamdi Bey, below Topkapı Palace.",
+     "accept": [
+      [
+       "f59104e9",
+       "028c0923",
+       "adb01a7c",
+       "b2ae7168",
+       "bcc2975b",
+       "56540090"
+      ]
+     ],
+     "lat": 41.01167,
+     "lng": 28.98111,
+     "photoNote": "You next to the column remains excavated in Sarayburnu, Saraçhane or Sultanahmet.",
+     "task": {
+      "points": null,
+      "minWords": 60,
+      "q": "What are two spolia examples you can find in the Istanbul Archaeology Museums and what were their original usages?"
+     }
+    }
+   ]
+  },
+  {
+   "id": "4",
+   "name": "Group 4",
+   "sections": "D1, D2",
+   "concept": "Emperorship",
+   "stops": [
+    {
+     "kind": "place",
+     "check": null,
+     "photo": true,
+     "label": "Riddle 1",
+     "riddle": {
+      "en": "In Beyazıt, where people pass each day,\nFragments of my past remain here.\nAn emperor rebuilt me long ago.\nWith arches and a column, I am known to all.\nOnce a great forum, busy and grand,\nWhat am I, whose stones still stand?"
+     },
+     "hint": "Look along Ordu Caddesi for broken columns carved with a tear-drop pattern.",
+     "accept": [
+      [
+       "2267a30c",
+       "3785d92f",
+       "aa71fea6",
+       "227fa7f2",
+       "60101f5d",
+       "afce0cb8",
+       "0642e0ef"
+      ]
+     ],
+     "lat": 41.00905,
+     "lng": 28.96392,
+     "photoNote": "You with the column fragments behind you.",
+     "task": {
+      "points": null,
+      "minWords": 60,
+      "q": "Why do you think Roman emperors built monuments in public spaces?"
+     }
+    },
+    {
+     "kind": "place",
      "check": {
-      "q": "How many of the three heads are still on the column today?",
+      "q": "Count them from outside: how many minarets stand around the building?",
       "accept": [
        [
-        "350ca8af",
-        "8b6fe763",
-        "ada7afdb",
-        "4faeced2",
-        "0dd2c9fb",
-        "46b8c0de",
-        "527dae8a",
-        "34f94325"
+        "310ca263",
+        "2f69f5a5",
+        "25c1e212"
        ]
       ]
      },
      "photo": true,
-     "photoNote": "You next to the column.",
-     "task": {
-      "points": 1,
-      "minWords": 40,
-      "q": "Please identify the artwork in question, give some details about its history and indicate its original condition."
-     }
-    }
-   ]
-  },
-  {
-   "id": "B",
-   "name": "Team B",
-   "concept": "Commemorative Art",
-   "stops": [
-    {
-     "kind": "place",
-     "label": "Riddle 1",
-     "riddle": {
-      "en": "[Riddle 1 placeholder]",
-      "tr": "[Bilmece 1 – Türkçesi]"
-     },
-     "hint": "[Hint placeholder]",
-     "accept": [
-      [
-       "afd071e5"
-      ]
-     ],
-     "lat": null,
-     "lng": null,
-     "check": null,
-     "photo": true,
-     "task": {
-      "q": "[Question placeholder]",
-      "points": 1,
-      "minWords": 10
-     }
-    },
-    {
-     "kind": "place",
      "label": "Riddle 2",
      "riddle": {
-      "en": "[Riddle 2 placeholder]",
-      "tr": "[Bilmece 2 – Türkçesi]"
+      "en": "I have witnessed empires rise and fall.\nNext to the city’s imperial palace and public square,\nI have always been the most significant shrine\nThough rulers and names changed, I remained in sight.\nWhat am I?"
      },
-     "hint": "[Hint placeholder]",
+     "hint": "Commissioned by Justinian, it faces the Blue Mosque across Sultanahmet Square.",
      "accept": [
       [
-       "afd071e5"
+       "5e5f175d",
+       "c4f7b879",
+       "c848a30b",
+       "7563911c",
+       "7563911c",
+       "a046a882",
+       "63d3a482",
+       "3bdcd686",
+       "d945ffbd"
       ]
      ],
-     "lat": null,
-     "lng": null,
-     "check": null,
-     "photo": true,
+     "lat": 41.00858,
+     "lng": 28.98022,
+     "photoNote": "You in front of the building, with the dome visible.",
      "task": {
-      "q": "[Question placeholder]",
-      "points": 1,
-      "minWords": 10
+      "points": null,
+      "minWords": 60,
+      "q": "How did Emperor Justinian use the construction of Hagia Sophia to express his imperial and religious authority?"
      }
     },
     {
      "kind": "place",
+     "check": null,
+     "photo": true,
      "label": "Riddle 3",
      "riddle": {
-      "en": "[Riddle 3 placeholder]",
-      "tr": "[Bilmece 3 – Türkçesi]"
+      "en": "Near Gülhane Park, beneath the imperial palace, all my treasures lie.\nTelling enchanted stories of times gone by.\nStatues, sculptures, medals, and sarcophagi fill my halls\nWhile ancient stories echo through my walls.\nWhat am I?"
      },
-     "hint": "[Hint placeholder]",
+     "hint": "Founded by Osman Hamdi Bey, below Topkapı Palace.",
      "accept": [
       [
-       "afd071e5"
+       "f59104e9",
+       "028c0923",
+       "adb01a7c",
+       "b2ae7168",
+       "bcc2975b",
+       "56540090"
       ]
      ],
-     "lat": null,
-     "lng": null,
-     "check": null,
-     "photo": true,
+     "lat": 41.01167,
+     "lng": 28.98111,
+     "photoNote": "You next to a statue of a Roman emperor.",
      "task": {
-      "q": "[Question placeholder]",
-      "points": 1,
-      "minWords": 10
-     }
-    }
-   ]
-  },
-  {
-   "id": "C",
-   "name": "Team C",
-   "concept": "[Concept placeholder]",
-   "stops": [
-    {
-     "kind": "place",
-     "label": "Riddle 1",
-     "riddle": {
-      "en": "[Riddle 1 placeholder]",
-      "tr": "[Bilmece 1 – Türkçesi]"
-     },
-     "hint": "[Hint placeholder]",
-     "accept": [
-      [
-       "afd071e5"
-      ]
-     ],
-     "lat": null,
-     "lng": null,
-     "check": null,
-     "photo": true,
-     "task": {
-      "q": "[Question placeholder]",
-      "points": 1,
-      "minWords": 10
-     }
-    },
-    {
-     "kind": "place",
-     "label": "Riddle 2",
-     "riddle": {
-      "en": "[Riddle 2 placeholder]",
-      "tr": "[Bilmece 2 – Türkçesi]"
-     },
-     "hint": "[Hint placeholder]",
-     "accept": [
-      [
-       "afd071e5"
-      ]
-     ],
-     "lat": null,
-     "lng": null,
-     "check": null,
-     "photo": true,
-     "task": {
-      "q": "[Question placeholder]",
-      "points": 1,
-      "minWords": 10
-     }
-    },
-    {
-     "kind": "place",
-     "label": "Riddle 3",
-     "riddle": {
-      "en": "[Riddle 3 placeholder]",
-      "tr": "[Bilmece 3 – Türkçesi]"
-     },
-     "hint": "[Hint placeholder]",
-     "accept": [
-      [
-       "afd071e5"
-      ]
-     ],
-     "lat": null,
-     "lng": null,
-     "check": null,
-     "photo": true,
-     "task": {
-      "q": "[Question placeholder]",
-      "points": 1,
-      "minWords": 10
-     }
-    }
-   ]
-  },
-  {
-   "id": "D",
-   "name": "Team D",
-   "concept": "[Concept placeholder]",
-   "stops": [
-    {
-     "kind": "place",
-     "label": "Riddle 1",
-     "riddle": {
-      "en": "[Riddle 1 placeholder]",
-      "tr": "[Bilmece 1 – Türkçesi]"
-     },
-     "hint": "[Hint placeholder]",
-     "accept": [
-      [
-       "afd071e5"
-      ]
-     ],
-     "lat": null,
-     "lng": null,
-     "check": null,
-     "photo": true,
-     "task": {
-      "q": "[Question placeholder]",
-      "points": 1,
-      "minWords": 10
-     }
-    },
-    {
-     "kind": "place",
-     "label": "Riddle 2",
-     "riddle": {
-      "en": "[Riddle 2 placeholder]",
-      "tr": "[Bilmece 2 – Türkçesi]"
-     },
-     "hint": "[Hint placeholder]",
-     "accept": [
-      [
-       "afd071e5"
-      ]
-     ],
-     "lat": null,
-     "lng": null,
-     "check": null,
-     "photo": true,
-     "task": {
-      "q": "[Question placeholder]",
-      "points": 1,
-      "minWords": 10
-     }
-    },
-    {
-     "kind": "place",
-     "label": "Riddle 3",
-     "riddle": {
-      "en": "[Riddle 3 placeholder]",
-      "tr": "[Bilmece 3 – Türkçesi]"
-     },
-     "hint": "[Hint placeholder]",
-     "accept": [
-      [
-       "afd071e5"
-      ]
-     ],
-     "lat": null,
-     "lng": null,
-     "check": null,
-     "photo": true,
-     "task": {
-      "q": "[Question placeholder]",
-      "points": 1,
-      "minWords": 10
+      "points": null,
+      "minWords": 60,
+      "q": "How do statues and other objects displayed in the museum help us understand how Roman emperors wanted to be remembered?"
      }
     }
    ]
   }
  ],
- "sharedStops": [
-  {
-   "kind": "place",
-   "label": "Meeting point",
-   "solveLabel": "Where is that place?",
-   "riddle": {
-    "en": "So, did you find it? What was it, and where was one of the missing pieces?\nTell me, where is that place?\nYou must go there, because your final riddle awaits you there.\nDon’t forget to bring your Museum Card (Müzekart) with you!",
-    "tr": "Buldun mu peki, neymiş ve neredeymiş kayıp parçalardan biri?\nSöyle bana orası neresi?\nGitmelisin oraya çünkü son bilmecen orada\nUnutma almayı Müzekart’ını yanına!"
-   },
-   "hint": "Three buildings and a garden of marbles, just inside Gülhane, below Topkapı Palace.",
-   "accept": [
-    [
-     "f59104e9",
-     "028c0923",
-     "adb01a7c",
-     "b2ae7168",
-     "bcc2975b",
-     "56540090"
-    ]
-   ],
-   "lat": 41.01167,
-   "lng": 28.98111,
-   "check": null,
-   "photo": true,
-   "photoNote": "You at the museum entrance.",
-   "task": null
-  },
-  {
-   "kind": "place",
-   "label": "Final riddle",
-   "solveLabel": "What is its name?",
-   "riddle": {
-    "en": "Welcome! Come, don’t be shy—step inside!\nMy doors are open to all who are fascinated by history and art.\nI am overflowing with culture; I could never contain it within my three buildings, so it spills out into my gardens as well.\nIn the courtyard, you will find a marble column capital, carved with a pair of eyes crowned by flowing, wavy locks.\nIt stands alone, far from its original home…\nSo, tell me: what is its name, and what is its mythological significance?",
-    "tr": "Hoşgeldin, gel çekinme, gir içeri!\nTüm tarih ve sanat meraklılarına kapım açıktır benim\nHer yerim kültür doludur, sığmam üç binama da, bahçelerime taşarım\nBulacaksın avluda bir sütun başı, mermerden yontulmuş bir çift göz var, dalgalı perçemlerin taçlandırdığı\nDuruyor tek başına, asıl evinden uzakta…\nSöyle bakalım nedir onun adı ve mitolojik bağlamı?"
-   },
-   "hint": "A snake-haired figure from Greek myth whose gaze turned people to stone.",
-   "accept": [
-    [
-     "c2c9991d",
-     "cb6768e1",
-     "dafa06ae",
-     "7921dc3c",
-     "8aceb969"
-    ]
-   ],
-   "lat": null,
-   "lng": null,
-   "check": null,
-   "photo": true,
-   "photoNote": "You with the capital in the courtyard.",
-   "task": {
-    "points": 1,
-    "minWords": 40,
-    "q": "Please provide some information about the artwork that the riddle led you to (style and iconography)."
-   }
-  },
-  {
-   "kind": "think",
-   "label": "Your last discovery speaks to you",
-   "solveLabel": "Where is my sister now?",
-   "riddle": {
-    "en": "You listened to my sorrowful story and showed me such kindness—thank you.\nI have other sisters whom I am deeply connected to, scattered all across Istanbul.\nOne of them, in particular, stands upside down in a dark, damp underground palace.\nThere’s no need to set off on another journey—stay here with me.\nBut tell me, where is my sister now?",
-    "tr": "Dinledin benim hüzünlü hikayemi, ilgi gösterdin, teşekkür ederim\nBenim kalpten bağlı olduğum başka kız kardeşlerim de var, dağılmışlar İstanbul’un dört bir yanına\nHele biri duruyor baş aşağı, karanlık ve nemli bir yeraltı sarayında\nGerek yok yeni bir yolculuğa, kal yanımda\nAma söyle bana, nerede kardeşim şu anda?"
-   },
-   "hint": "Justinian's underground water reservoir in Sultanahmet, with a forest of columns.",
-   "accept": [
-    [
-     "60dc698d",
-     "57b9db76",
-     "ef281a9d",
-     "70226e1c",
-     "62d4a49f"
-    ]
-   ],
-   "photo": false,
-   "task": {
-    "points": 1,
-    "minWords": 40,
-    "q": "Please identify the place in question and provide brief information about its history and architecture."
-   }
-  }
- ],
+ "sharedStops": [],
  "ending": {
   "en": "And here we are—you’ve completed the adventure! May Athena Nike crown your hair with a laurel wreath.\nDon’t forget this day: you traveled through time, wandering through ancient Istanbul step by step, like a Roman.\nAll of Istanbul’s monuments celebrate you from the bottom of their hearts.\nAnd they have one final message for you: don’t stay away too long—come visit us again as soon as you can!",
   "tr": "İşte böylece tamamladın bu macerayı, Athena Nike koymalı saçlarına defneden tacı\nUnutma bugününü, yolculuk ettin zamanda, dolaştın kadim İstanbul’u bir Romalı gibi adım adım\nKutluyor İstanbul’un tüm yapıtları kalpten seni\nDiyorlar ki uzatma arayı, ziyaret et yine en kısa zamanda bizi!"
@@ -624,7 +560,7 @@ function dist(a,b,c,d){const R=6371000,r=Math.PI/180,x=(c-a)*r,y=(d-b)*r;
 const TR={ç:"c",Ç:"C",ğ:"g",Ğ:"G",ı:"i",İ:"I",ö:"o",Ö:"O",ş:"s",Ş:"S",ü:"u",Ü:"U"};
 function fileSafe(s){return String(s).trim().replace(/[çÇğĞıİöÖşŞüÜ]/g,m=>TR[m]).normalize("NFD").replace(/[̀-ͯ]/g,"")
   .split(/[^A-Za-z0-9]+/).filter(Boolean).map(w=>w[0].toUpperCase()+w.slice(1)).join("")}
-function pdfName(){return `scavenger_hunt_${CONFIG.fileYear}_${fileSafe(S.first)}_${fileSafe(S.last)}_${fileSafe(S.ta)}.pdf`}
+function pdfName(){return `scavenger_hunt_${CONFIG.fileYear}_${fileSafe(S.first)}_${fileSafe(S.last)}_${fileSafe(S.section)}.pdf`}
 
 /* ---------------- storage: progress in localStorage, photos in IndexedDB ---------------- */
 let S=load(), PH={}, adminMode=location.hash==="#admin", resetAsk=false, pdfBlob=null;
@@ -641,7 +577,7 @@ async function clearPhotos(){PH={};try{const db=await idb();db.transaction("phot
 function team(){return CONFIG.teams.find(t=>t.id===S.team)}
 function steps(){const t=team();return t?[...t.stops,...CONFIG.sharedStops]:[]}
 function cur(){return S.cur||(S.cur={solved:false,said:"",gps:null,check:false,checkSaid:"",photo:false,hint:false,text:""})}
-function riddleHtml(r){return `<div class="riddle">${esc(r.en)}</div>${r.tr?`<details><summary>Türkçesi</summary><div class="riddle">${esc(r.tr)}</div></details>`:""}`}
+function riddleHtml(r){if(!r)return "";return `<div class="riddle">${esc(r.en)}</div>${r.tr?`<details><summary>Türkçesi</summary><div class="riddle">${esc(r.tr)}</div></details>`:""}`}
 
 /* ---------------- start over (student) ---------------- */
 function resetHtml(){
@@ -659,7 +595,7 @@ function wireReset(again){
 /* ---------------- screens ---------------- */
 function render(){
   if(adminMode) return renderAdmin();
-  if(!team()||!S.number) return renderStart();
+  if(!team()||!S.number||!S.section) return renderStart();
   if(S.idx>=steps().length) return renderDone();
   renderStep();
 }
@@ -672,9 +608,10 @@ function renderStart(){
     <span class="pill" style="align-self:flex-start">${esc(CONFIG.course)}</span>
     <h1>${esc(CONFIG.title)}</h1>
     <p class="sub">${esc(CONFIG.intro)}</p>
+    ${CONFIG.startPoint?`<p class="notice" style="margin:0"><b>${esc(CONFIG.startPoint)}</b></p>`:""}
     <div class="card">
-      <label for="t">Your hunt</label>
-      <select id="t">${CONFIG.teams.map(t=>`<option value="${t.id}">${esc(t.name)} · ${esc(t.concept)}</option>`).join("")}</select>
+      <label for="t">Discussion section</label>
+      <select id="t"><option value="">Choose your section</option>${CONFIG.teams.map(t=>`<optgroup label="${esc(t.name)} · ${esc(t.concept)}">${t.sections.split(",").map(x=>x.trim()).map(x=>`<option value="${t.id}|${esc(x)}">${esc(x)} · ${esc(t.name)} · ${esc(t.concept)}</option>`).join("")}</optgroup>`).join("")}</select>
       <div class="row">
         <div><label for="fn">Name</label><input id="fn" autocomplete="given-name"></div>
         <div><label for="ln">Surname</label><input id="ln" autocomplete="family-name"></div>
@@ -695,7 +632,9 @@ function renderStart(){
     if(!/^\d{4,}$/.test(no)){$("#e").textContent="Enter your student number using digits only.";return}
     if(!ta){$("#e").textContent="Choose or enter your TA's name.";return}
     clearPhotos();
-    S={team:$("#t").value,first:fn,last:ln,number:no,ta,idx:0,log:[],started:Date.now()};save();render();
+    const sel=$("#t").value; if(!sel){$("#e").textContent="Choose your discussion section.";return}
+    const [tid,sec]=sel.split("|");
+    S={team:tid,section:sec,first:fn,last:ln,number:no,ta,idx:0,log:[],started:Date.now()};save();render();
   };
   $("#go").onclick=go;
 }
@@ -708,10 +647,11 @@ function renderStep(){
   const photoDone=!s.photo||(c.photo&&PH["p"+S.idx]);
   const taskOk=()=>!s.task||words(c.text)>=s.task.minWords;
   const ready=()=>c.solved&&gpsDone&&checkDone&&photoDone&&taskOk();
+  if(!s.accept&&!c.solved){c.solved=true;c.said="";save()}
   const lock=c.solved?"":" locked";
   let k=1; const items=[];
 
-  items.push(`<div class="step"><div class="dot ${c.solved?"done":""}">${k++}</div><div class="body">
+  if(s.accept) items.push(`<div class="step"><div class="dot ${c.solved?"done":""}">${k++}</div><div class="body">
     <b>${esc(s.solveLabel||"Solve the riddle")}</b>
     ${c.solved?`<p class="msg ok">${place?`Correct: “${esc(c.said)}”. Head there now.`:`Correct: “${esc(c.said)}”.`}</p>`:`
       <input id="ans" autocomplete="off" placeholder="Your answer">
@@ -740,7 +680,7 @@ function renderStep(){
   </div></div>`);
 
   if(s.task) items.push(`<div class="step${lock}"><div class="dot ${c.solved&&taskOk()?"done":""}" id="tdot">${k++}</div><div class="body">
-    <b>Question</b> <span class="pts">${s.task.points} ${s.task.points===1?"point":"points"}</span>
+    <b>${s.kind==="reflect"?"Reflection":"Question"}</b>${s.task.points?` <span class="pts">${s.task.points} ${s.task.points===1?"point":"points"}</span>`:""}
     <p class="small" style="color:var(--ink)">${esc(s.task.q)}</p>
     ${c.solved?`<textarea id="txt" placeholder="Write your answer here">${esc(c.text)}</textarea><div class="wc" id="wc"></div>`:""}
   </div></div>`);
@@ -751,10 +691,11 @@ function renderStep(){
     <div class="progress">${list.map((_,i)=>`<span class="${i<=S.idx?"on":""}"></span>`).join("")}</div>
     <div class="card">
       <h2>${esc(s.label)}</h2>
-      ${riddleHtml(s.riddle)}
+      ${n===1&&CONFIG.startPoint?`<p class="small" style="margin:0 0 .4em">${esc(CONFIG.startPoint)}</p>`:""}
+      ${s.kind==="reflect"?`<p class="small" style="margin:0">One last answer about the whole route, then you're done.</p>`:riddleHtml(s.riddle)}
       ${s.hint?(c.hint?`<p class="small"><b>Hint:</b> ${esc(s.hint)}</p>`:`<button class="ghost" id="hint">Show hint (your TA will see you used it)</button>`):""}
     </div>
-    <div class="card"><h2>${place?"Find it and prove you're there":"Answer"}</h2><div class="steps">${items.join("")}</div></div>
+    <div class="card"><h2>${place?"Find it and prove you're there":s.kind==="reflect"?"Your reflection":"Answer"}</h2><div class="steps">${items.join("")}</div></div>
     <button id="next" ${ready()?"":"disabled"}>${n===list.length?"Finish the hunt":"Unlock the next riddle"}</button>
     <p class="small" id="nextNote" style="text-align:center">${ready()?"":"Complete every step above to continue."}</p>
     ${resetHtml()}`;
@@ -788,7 +729,7 @@ function renderStep(){
     S.log.push({step:n,label:s.label,said:c.said,hint:c.hint,loc,locOk:gpsNeeded?!!c.gps.ok:null,
       checkQ:s.check?s.check.q:"",checkSaid:c.checkSaid||"",
       photoKey:s.photo?"p"+S.idx:null,time:c.time||"",code:c.code||"",source:c.source||"",
-      q:s.task?s.task.q:"",points:s.task?s.task.points:0,text:c.text||"",done:Date.now()});
+      q:s.task?s.task.q:"",points:s.task&&s.task.points?s.task.points:0,text:c.text||"",done:Date.now()});
     S.idx++; S.cur=null; save(); render(); scrollTo(0,0);
   };
 }
@@ -842,7 +783,7 @@ function stamp(cv,source){
   ctx.font=`700 ${fs}px sans-serif`;
   ctx.fillText(`${S.first} ${S.last} · ${S.number}`,fs*.6,cv.height-H+fs*.45);
   ctx.font=`600 ${Math.round(fs*.88)}px sans-serif`;
-  ctx.fillText(`${t.name} · STEP ${S.idx+1} · ${fmt(now)} · CODE ${code}`,fs*.6,cv.height-H+fs*1.85);
+  ctx.fillText(`${S.section} · ${t.name} · STEP ${S.idx+1} · ${fmt(now)} · CODE ${code}`,fs*.6,cv.height-H+fs*1.85);
   ctx.font=`${Math.round(fs*.78)}px sans-serif`;
   ctx.fillText(`${c.pos?`GPS ${c.pos[0]}, ${c.pos[1]}`:"no GPS"} · ${source} · TA ${S.ta}`,fs*.6,cv.height-H+fs*3.2);
   putPhoto("p"+S.idx,cv.toDataURL("image/jpeg",.72));
@@ -891,12 +832,13 @@ async function buildPdf(){
   para(CONFIG.title,{size:18,bold:true,rgb:[107,42,74],gap:2});
   kv("Student",`${S.first} ${S.last}`);
   kv("Student number",S.number);
+  kv("Section",S.section);
   kv("TA",S.ta);
-  kv("Hunt",`${t.name} · ${t.concept}`);
+  kv("Hunt",`${t.name} · ${t.concept}${t.sections?` (${t.sections})`:""}`);
   kv("Started",fmt(S.started));
   kv("Finished",fmt(last));
   kv("PDF created",fmt(Date.now()));
-  kv("Questions total",`${total} points`);
+  if(total) kv("Questions total",`${total} points`);
   y+=2; rule();
 
   // summary table
@@ -913,17 +855,16 @@ async function buildPdf(){
     y+=h; doc.setDrawColor(217,213,220); doc.setLineWidth(0.2); doc.line(M,y,M+W,y);
   }
   row(cols.map(c=>c.h),true);
-  S.log.forEach(l=>row([l.step,l.said,l.time||"-",l.code||"-",l.locOk===null?"Not required":l.locOk?"Verified":"NOT verified",l.hint?"Used":"No"]));
+  S.log.forEach(l=>row([l.step,l.said||(l.label),l.time||"-",l.code||"-",l.locOk===null?"Not required":l.locOk?"Verified":"NOT verified",l.hint?"Used":"No"]));
   y+=4;
 
   // step sections
   for(const l of S.log){
     doc.addPage(); y=M;
     para(`Step ${l.step} · ${l.label}`,{size:13,bold:true,rgb:[107,42,74],gap:2});
-    kv("Riddle answer",l.said);
+    if(l.said) kv("Riddle answer",l.said);
     if(l.checkQ) kv("On-site detail",`${l.checkQ}\nAnswer: ${l.checkSaid} (correct)`);
-    kv("Location check",l.loc);
-    kv("Hint used",l.hint?"Yes":"No");
+    if(l.said){kv("Location check",l.loc);kv("Hint used",l.hint?"Yes":"No")}
     if(l.photoKey){
       kv("Photo",l.time?`${l.time} · proof code ${l.code} · ${l.source}`:"Missing");
       const img=PH[l.photoKey];
@@ -935,7 +876,7 @@ async function buildPdf(){
     }
     if(l.q){
       y+=1; rule();
-      para(`Question (${l.points} ${l.points===1?"point":"points"})`,{size:10,bold:true,gap:0.5});
+      para(l.points?`Question (${l.points} ${l.points===1?"point":"points"})`:(l.said?"Question":"Reflection"),{size:10,bold:true,gap:0.5});
       para(l.q,{size:10,rgb:[80,74,86],gap:2});
       para(`Answer (${words(l.text)} words)`,{size:10,bold:true,gap:0.5});
       para(l.text.trim(),{size:10.5,gap:2});
@@ -982,7 +923,7 @@ function renderDone(){
     </div>
     <div class="card tablebox"><h2>Your route</h2><table class="log">
       <tr><td><b>Step</b></td><td><b>Photo</b></td><td><b>Location</b></td><td><b>Hint</b></td></tr>
-      ${S.log.map(l=>`<tr><td>${l.step}. ${esc(l.said)}</td><td>${esc(l.time||"-")}</td><td>${l.locOk===null?"-":l.locOk?"verified":"not verified"}</td><td>${l.hint?"used":"no"}</td></tr>`).join("")}
+      ${S.log.map(l=>`<tr><td>${l.step}. ${esc(l.said||l.label)}</td><td>${esc(l.time||"-")}</td><td>${l.locOk===null?"-":l.locOk?"verified":"not verified"}</td><td>${l.hint?"used":"no"}</td></tr>`).join("")}
     </table></div>
     ${resetHtml()}`;
   wireReset(renderDone);
