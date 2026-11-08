@@ -339,15 +339,19 @@ const CONFIG = {
      "hint": "An Ottoman bathhouse built for Sultan Bayezid II, now a museum on Ordu Caddesi.",
      "accept": [
       [
+       "9e7228a1",
+       "d95e7201",
+       "c95e58d1",
+       "8e720f71",
+       "977df28d"
+      ],
+      [
        "6434f3bb",
        "915bd396",
        "59e2a2ea",
-       "915bd396",
        "30cb3740",
        "02e7e549",
-       "ba348544",
-       "3891d012",
-       "00755878"
+       "ba348544"
       ]
      ],
      "lat": 41.00934,
@@ -666,7 +670,7 @@ function renderStep(){
 
   if(s.check) items.push(`<div class="step${lock}"><div class="dot ${c.check?"done":""}">${k++}</div><div class="body">
     <b>On-site detail</b>
-    <p class="small">${esc(s.check.q)}</p>
+    <p class="small">${c.solved?esc(s.check.q):"Appears after you solve the riddle."}</p>
     ${c.check?`<p class="msg ok">Correct: “${esc(c.checkSaid)}”.</p>`:c.solved?`
       <input id="chk" autocomplete="off" placeholder="What you see">
       <button class="ghost" id="chkBtn">Check</button><p class="msg bad" id="ce"></p>`:""}
@@ -681,7 +685,7 @@ function renderStep(){
 
   if(s.task) items.push(`<div class="step${lock}"><div class="dot ${c.solved&&taskOk()?"done":""}" id="tdot">${k++}</div><div class="body">
     <b>${s.kind==="reflect"?"Reflection":"Question"}</b>${s.task.points?` <span class="pts">${s.task.points} ${s.task.points===1?"point":"points"}</span>`:""}
-    <p class="small" style="color:var(--ink)">${esc(s.task.q)}</p>
+    <p class="small"${c.solved?' style="color:var(--ink)"':""}>${c.solved?esc(s.task.q):"Appears after you solve the riddle."}</p>
     ${c.solved?`<textarea id="txt" placeholder="Write your answer here">${esc(c.text)}</textarea><div class="wc" id="wc"></div>`:""}
   </div></div>`);
 
