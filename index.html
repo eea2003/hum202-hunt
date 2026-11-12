@@ -110,15 +110,37 @@ const CONFIG = {
  "intro": "Solve each riddle, go to the place it describes and prove you were there. Your answers and photos are saved on this phone as you go. At the end you download one PDF and upload it to SUCourse.",
  "startPoint": "Start at Eminönü Square, in front of the New Mosque (Yeni Cami). Open your first riddle there.",
  "fileYear": "2026",
- "tas": [
-  "Gaye Kuas",
-  "Çise İpek Çınar",
-  "Çağla Bölek"
+ "taSessions": [
+  {
+   "ta": "Çise İpek Çınar",
+   "codes": [
+    "A1",
+    "B1",
+    "C1",
+    "D1"
+   ]
+  },
+  {
+   "ta": "Çağla Bölek",
+   "codes": [
+    "A2",
+    "B2",
+    "C2",
+    "D2"
+   ]
+  },
+  {
+   "ta": "Gaye Kuas",
+   "codes": [
+    "A3",
+    "B3"
+   ]
+  }
  ],
  "submitUrl": "https://sucourse.sabanciuniv.edu/plus/my/",
  "submitLabel": "Open SUCourse",
  "adminPin": "9999",
- "gpsRadiusMeters": 50000,
+ "gpsRadiusMeters": 300,
  "secret": "hum202-af750108",
  "teams": [
   {
@@ -605,39 +627,39 @@ function render(){
 }
 
 function renderStart(){
-  const taField=CONFIG.tas&&CONFIG.tas.length
-    ?`<select id="ta"><option value="">Choose your TA</option>${CONFIG.tas.map(t=>`<option>${esc(t)}</option>`).join("")}</select>`
-    :`<input id="ta" autocomplete="off">`;
   app.innerHTML=`
     <span class="pill" style="align-self:flex-start">${esc(CONFIG.course)}</span>
     <h1>${esc(CONFIG.title)}</h1>
     <p class="sub">${esc(CONFIG.intro)}</p>
     ${CONFIG.startPoint?`<p class="notice" style="margin:0"><b>${esc(CONFIG.startPoint)}</b></p>`:""}
     <div class="card">
-      <label for="t">Discussion section</label>
-      <select id="t"><option value="">Choose your section</option>${CONFIG.teams.map(t=>`<optgroup label="${esc(t.name)} · ${esc(t.concept)}">${t.sections.split(",").map(x=>x.trim()).map(x=>`<option value="${t.id}|${esc(x)}">${esc(x)} · ${esc(t.name)} · ${esc(t.concept)}</option>`).join("")}</optgroup>`).join("")}</select>
+      <label for="t">Your group</label>
+      <select id="t"><option value="">Choose your group</option>${CONFIG.teams.map(t=>`<option value="${t.id}">${esc(t.name)} · ${esc(t.concept)} (${esc(t.sections)})</option>`).join("")}</select>
+      <label for="ta">Your TA</label>
+      <select id="ta"><option value="">Choose your TA</option>${CONFIG.taSessions.map((x,i)=>`<option value="${i}">${esc(x.codes.join(" · "))} · ${esc(x.ta)}</option>`).join("")}</select>
       <div class="row">
         <div><label for="fn">Name</label><input id="fn" autocomplete="given-name"></div>
         <div><label for="ln">Surname</label><input id="ln" autocomplete="family-name"></div>
       </div>
       <label for="no">Student number</label>
       <input id="no" inputmode="numeric" autocomplete="off">
-      <label for="ta">TA's name</label>
-      ${taField}
-      <p class="small">Your name, number and TA appear on every photo and on the PDF you submit, so check the spelling.</p>
+      <p class="small">Your name, number, section and TA appear on every photo and on the PDF you submit, so check the spelling.</p>
       <button id="go">Start the hunt</button>
       <p class="msg bad" id="e"></p>
     </div>`;
   const go=()=>{
     const no=$("#no").value.trim();
     if(no===CONFIG.adminPin){adminMode=true;return render()}
-    const fn=$("#fn").value.trim(), ln=$("#ln").value.trim(), ta=$("#ta").value.trim();
+    const fn=$("#fn").value.trim(), ln=$("#ln").value.trim();
     if(!fn||!ln){$("#e").textContent="Enter your name and surname.";return}
     if(!/^\d{4,}$/.test(no)){$("#e").textContent="Enter your student number using digits only.";return}
-    if(!ta){$("#e").textContent="Choose or enter your TA's name.";return}
+    const tid=$("#t").value, ti=$("#ta").value;
+    if(!tid){$("#e").textContent="Choose your group.";return}
+    if(ti===""){$("#e").textContent="Choose your TA.";return}
+    const team_=CONFIG.teams.find(x=>x.id===tid), sess=CONFIG.taSessions[+ti], ta=sess.ta;
+    const sec=sess.codes.find(c=>team_.sections.split(",").map(s=>s.trim()).includes(c));
+    if(!sec){$("#e").textContent=`${ta}'s sections are ${sess.codes.join(", ")}. Check your group and your TA.`;return}
     clearPhotos();
-    const sel=$("#t").value; if(!sel){$("#e").textContent="Choose your discussion section.";return}
-    const [tid,sec]=sel.split("|");
     S={team:tid,section:sec,first:fn,last:ln,number:no,ta,idx:0,log:[],started:Date.now()};save();render();
   };
   $("#go").onclick=go;
